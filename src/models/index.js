@@ -1,8 +1,14 @@
-'use strict';
+/* eslint-disable no-path-concat */
+/* eslint-disable prefer-template */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable arrow-parens */
+/* eslint-disable arrow-body-style */
 
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
