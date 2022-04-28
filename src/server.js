@@ -1,7 +1,8 @@
-const dotenv = require('dotenv');
-const app = require('./app');
+/* eslint-disable import/extensions */
+import { config } from 'dotenv';
+import app from './app.js';
 
-dotenv.config();
+config();
 
 const PORT = process.env.PORT || 8000;
 
