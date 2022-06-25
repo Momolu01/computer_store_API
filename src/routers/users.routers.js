@@ -11,19 +11,19 @@ import {
 const router = Router();
 
 // GET: Obtener todos los usuarios
-router.get('/api/v1/users/', getAllCtrl);
+router.get('/', getAllCtrl);
 
 // GET: Obtener un usuario por su ID
-router.get('/api/v1/users/:id', getByIdCtrl);
+router.get('/:id', getByIdCtrl);
 
 // POST: Crear un nuevo usuario:
 //  req.body(name, email, password, role), el role(rol) puede ser client o employee
-router.post('/api/v1/users/', addCtrl);
+router.post('/', addCtrl);
 
 // PATCH: Actualizar usuario por ID: Solo nombre y email
-router.patch('/api/v1/users/:id', updateCtrl);
+router.patch('/:id', updateCtrl);
 
 // DELETE: Deshabilitar usuario
-router.delete('/api/v1/users/:id', disableCtrl);
+router.delete('/:id', disableCtrl);
 
 export default router;

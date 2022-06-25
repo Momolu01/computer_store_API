@@ -1,13 +1,13 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-useless-catch */
 import initModels from '../models/init-models.js';
-
-const { users } = initModels();
+import Users from '../models/users.js';
 
 // GET: Obtener todos los usuarios
 export const getAll = async () => {
   try {
-    const result = await users.findAll();
+    const result = await Users.findAll();
+    console.log(result);
     return result;
   } catch (error) {
     throw error;
@@ -17,7 +17,7 @@ export const getAll = async () => {
 // GET: Obtener un usuario por su ID
 export const getById = async (id) => {
   try {
-    const result = await users.findByPk(id);
+    const result = await Users.findByPk(id);
     return result;
   } catch (error) {
     throw error;
@@ -27,7 +27,7 @@ export const getById = async (id) => {
 //   req.body(name, email, password, role), el role(rol) puede ser client o employee
 export const add = async (obj) => {
   try {
-    const result = await users.create(obj);
+    const result = await Users.create(obj);
     return result;
   } catch (error) {
     throw error;
@@ -39,7 +39,7 @@ export const update = async (id, obj) => {
     where: { id },
   };
   try {
-    const result = await users.update(obj, options);
+    const result = await Users.update(obj, options);
     return result;
   } catch (error) {
     throw error;
@@ -52,7 +52,7 @@ export const disable = async (id) => {
     where: { id },
   };
   try {
-    const result = await users.update(obj, options);
+    const result = await Users.update(obj, options);
     return result;
   } catch (error) {
     throw error;

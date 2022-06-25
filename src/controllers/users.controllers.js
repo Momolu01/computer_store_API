@@ -6,6 +6,7 @@ import {
   update,
   disable,
 } from '../services/users.services.js';
+import { encryptPassword } from '../middleware/index.js';
 
 // GET: Obtener todos los usuarios
 export const getAllCtrl = async (req, res, next) => {
@@ -31,9 +32,21 @@ export const getByIdCtrl = async (req, res, next) => {
 // POST: Crear un nuevo usuario:
 //  req.body(name, email, password, role), el role(rol) puede ser client o employee
 export const addCtrl = async (req, res, next) => {
-  const data = req.body;
   try {
-    const result = await add(data);
+    const {
+      name,
+      email,
+      password,
+      role,
+    } = req.body;
+    const encryptedPassword = await encryptPassword(password);
+    const newUser = {
+      name,
+      email,
+      password: encryptedPassword,
+      role,
+    };
+    const result = await add(newUser);
     res.status(201).json(result);
   } catch (error) {
     next(error);

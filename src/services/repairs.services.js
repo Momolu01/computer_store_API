@@ -2,12 +2,12 @@
 /* eslint-disable no-useless-catch */
 import initModels from '../models/init-models.js';
 
-const { repairs } = initModels();
+const { Repairs } = initModels();
 
 // GET: Obtener todos los equipos
 export const getAll = async () => {
   try {
-    const result = await repairs.findAll();
+    const result = await Repairs.findAll();
     return result;
   } catch (error) {
     throw error;
@@ -17,7 +17,7 @@ export const getAll = async () => {
 // GET: Obtener un equipo por su ID
 export const getById = async (id) => {
   try {
-    const result = await repairs.findByPk(id);
+    const result = await Repairs.findByPk(id);
     return result;
   } catch (error) {
     throw error;
@@ -28,7 +28,7 @@ export const getById = async (id) => {
 //  date y userId
 export const add = async (obj) => {
   try {
-    const result = await repairs.create(obj);
+    const result = await Repairs.create(obj);
     return result;
   } catch (error) {
     throw error;
@@ -41,7 +41,7 @@ export const update = async (id, obj) => {
     where: { id },
   };
   try {
-    const result = await repairs.update(obj, options);
+    const result = await Repairs.update(obj, options);
     return result;
   } catch (error) {
     throw error;
@@ -54,7 +54,7 @@ export const cancel = async (id) => {
     where: { id },
   };
   try {
-    const result = await repairs.update(obj, options);
+    const result = await Repairs.update(obj, options);
     return result;
   } catch (error) {
     throw error;
