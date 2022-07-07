@@ -34,14 +34,14 @@ export const getByIdCtrl = async (req, res, next) => {
 export const addCtrl = async (req, res, next) => {
   try {
     const {
-      name,
+      userName,
       email,
       password,
       role,
     } = req.body;
     const encryptedPassword = await encryptPassword(password);
     const newUser = {
-      name,
+      userName,
       email,
       password: encryptedPassword,
       role,

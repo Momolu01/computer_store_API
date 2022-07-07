@@ -7,6 +7,12 @@ import {
   getByIdCtrl,
   updateCtrl,
 } from '../controllers/users.controllers.js';
+import {
+  checkDuplicated,
+  checkExistedRole,
+  isAdmin,
+  isEmployee,
+} from '../middleware/index.js';
 
 const router = Router();
 
@@ -18,7 +24,7 @@ router.get('/:id', getByIdCtrl);
 
 // POST: Crear un nuevo usuario:
 //  req.body(name, email, password, role), el role(rol) puede ser client o employee
-router.post('/', addCtrl);
+router.post('/', [checkDuplicated, checkExistedRole], addCtrl);
 
 // PATCH: Actualizar usuario por ID: Solo nombre y email
 router.patch('/:id', updateCtrl);

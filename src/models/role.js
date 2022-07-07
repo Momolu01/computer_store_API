@@ -20,7 +20,7 @@ Roles.init(
   },
   {
     sequelize,
-    modelName: 'Role',
+    modelName: 'Roles',
     schema: 'public',
     timestamps: false,
   },

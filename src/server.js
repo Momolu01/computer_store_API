@@ -1,3 +1,4 @@
+/* eslint-disable wrap-iife */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable func-names */
 /* eslint-disable import/extensions */
@@ -9,9 +10,8 @@ config();
 
 const PORT = process.env.PORT || 8000;
 (async function () {
-  await sequelize.authenticate();
-  await sequelize.sync({force: true});
+  await sequelize.sync({ force: true });
   app.listen(PORT, () => {
     console.log(`Se esta escuchando el puerto ${PORT}`);
   });
-}());
+})();

@@ -1,13 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-useless-catch */
-import initModels from '../models/init-models.js';
 import Users from '../models/users.js';
 
 // GET: Obtener todos los usuarios
 export const getAll = async () => {
   try {
     const result = await Users.findAll();
-    console.log(result);
     return result;
   } catch (error) {
     throw error;
