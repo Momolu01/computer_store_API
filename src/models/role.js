@@ -3,7 +3,7 @@ import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '../database/database.js';
 
-export const ROLES = ['employee', 'user', 'admin'];
+export const ROLELIST = ['employee', 'user', 'admin'];
 class Roles extends Model {}
 
 Roles.init(
