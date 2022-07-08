@@ -31,6 +31,12 @@ Users.init(
       defaultValue: 'available',
     },
     roles: {
+      get() {
+        return JSON.parse(this.getDataValue('myArrayField'));
+      },
+      set(val) {
+        return this.setDataValue('myArrayField', JSON.stringify(val));
+      },
       type: DataTypes.INTEGER,
       reference: {
         model: sequelize.models.Roles,

@@ -11,7 +11,7 @@ config();
 
 const PORT = process.env.PORT || 8000;
 (async function () {
-  await sequelize.sync();
+  await sequelize.sync({force: true});
   createRoles();
   app.listen(PORT, () => {
     console.log(`Se esta escuchando el puerto ${PORT}`);
