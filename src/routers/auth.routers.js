@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { Router } from 'express';
 import { signUp } from '../controllers/auth.controllers.js';
 import { checkDuplicated, checkExistedRole } from '../middleware/index.js';

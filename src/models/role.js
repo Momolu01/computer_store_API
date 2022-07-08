@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '../database/database.js';

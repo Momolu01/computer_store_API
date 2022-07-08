@@ -1,8 +1,5 @@
-/* eslint-disable import/extensions */
 /* eslint-disable no-useless-catch */
-import initModels from '../models/init-models.js';
-
-const { Repairs } = initModels();
+import Repairs from '../models/repairs.js';
 
 // GET: Obtener todos los equipos
 export const getAll = async () => {

@@ -1,5 +1,4 @@
 /* eslint-disable object-curly-newline */
-/* eslint-disable import/extensions */
 import { Op } from 'sequelize';
 import { encryptPassword } from '../middleware/index.js';
 

@@ -1,9 +1,7 @@
 /* eslint-disable object-curly-spacing */
-/* eslint-disable import/extensions */
 import { Model, DataTypes, Deferrable } from 'sequelize';
 
 import sequelize from '../database/database.js';
-import Roles from './role.js';
 
 class Users extends Model {}
 Users.init(
@@ -21,6 +19,9 @@ Users.init(
       type: DataTypes.STRING(100),
       allowNull: false,
       unique: 'users_email_key',
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING(100),
@@ -52,7 +53,5 @@ Users.init(
     timestamps: false,
   },
 );
-
-Users.hasMany(Roles);
 
 export default Users;

@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { verifyToken, isAdmin, isEmployee } from './authJwt.js';
 import { errorHandler } from './error.middleware.js';
 import { comparePassword, encryptPassword } from './passwordHandler.js';

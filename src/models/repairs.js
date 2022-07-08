@@ -1,44 +1,41 @@
-import _sequelize from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
-const { Model } = _sequelize;
+import sequelize from '../database/database.js';
 
-export default class repairs extends Model {
-  static init(sequelize, DataTypes) {
-    return super.init(
+export default class Repairs extends Model {}
+Repairs.init(
+  {
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
+    date_due: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      defaultValue: 'pending',
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: 'repairs',
+    schema: 'public',
+    timestamps: false,
+    indexes: [
       {
-        id: {
-          autoIncrement: true,
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          primaryKey: true,
-        },
-        date_due: {
-          type: DataTypes.DATEONLY,
-          allowNull: false,
-        },
-        status: {
-          type: DataTypes.STRING(20),
-          allowNull: true,
-          defaultValue: 'pending',
-        },
-        user_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
+        name: 'repairs_pkey',
+        unique: true,
+        fields: [{ name: 'id' }],
       },
-      {
-        sequelize,
-        tableName: 'repairs',
-        schema: 'public',
-        timestamps: false,
-        indexes: [
-          {
-            name: 'repairs_pkey',
-            unique: true,
-            fields: [{ name: 'id' }],
-          },
-        ],
-      },
-    );
-  }
-}
+    ],
+  },
+);

@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 /* eslint-disable no-useless-catch */
 import Users from '../models/users.js';
 

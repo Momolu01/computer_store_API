@@ -1,5 +1,4 @@
 /* eslint-disable no-plusplus */
-/* eslint-disable import/extensions */
 import { ROLELIST } from '../models/role.js';
 import Users from '../models/users.js';
 
