@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import tokenConfig from '../config/token.config.js';
 
 export const createToken = (userId) => {

@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-spacing */
-import { Model, DataTypes, Deferrable } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '../database/database.js';
 
@@ -30,20 +30,6 @@ Users.init(
     status: {
       type: DataTypes.STRING(20),
       defaultValue: 'available',
-    },
-    roles: {
-      get() {
-        return JSON.parse(this.getDataValue('myArrayField'));
-      },
-      set(val) {
-        return this.setDataValue('myArrayField', JSON.stringify(val));
-      },
-      type: DataTypes.INTEGER,
-      reference: {
-        model: sequelize.models.Roles,
-        key: 'id',
-        deferrable: Deferrable.INITIALLY_DEFERRED,
-      },
     },
   },
   {

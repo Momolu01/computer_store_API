@@ -1,35 +1,37 @@
 /* eslint-disable object-curly-newline */
 import { Op } from 'sequelize';
-import { encryptPassword } from '../middleware/index.js';
 
-import Roles from '../models/role.js';
+import { encryptPassword } from '../middleware/index.js';
+import { createToken } from '../libs/jwtHandler.js';
+
+import Roles from '../models/roles.js';
 import Users from '../models/users.js';
 
 export const signUp = async (req, res) => {
   const { userName, email, password, roles } = req.body;
 
-  const newUserObj = {
+  const newUser = await Users.create({
     userName,
     email,
     password: await encryptPassword(password),
-  };
+  });
   if (roles) {
     const foundRoles = await Roles.findAll({
       where: {
-        name: {
-          [Op.in]: roles,
-        },
+        name: { [Op.in]: roles },
       },
     });
-    newUserObj.roles = foundRoles.map((role) => role.id);
+    foundRoles.forEach(async (role) => {
+      await role.addUser(newUser);
+    });
   } else {
-    const role = await Roles.findOne({ where: { name: 'user' } });
-    newUserObj.roles = [role.id];
+    const defaultRole = await Roles.findOne({ where: { name: 'user' } });
+    console.log(defaultRole.name, newUser.userName);
+    await defaultRole.addUser(newUser);
   }
-  console.log(newUserObj);
-  const newUser = Users.create(newUserObj);
 
-  res.status(200).json({ message: 'signUp', newUser });
+  const token = createToken(newUser.id);
+  res.status(200).json({ newUser, token });
 };
 
 export const signIn = (req, res) => {

@@ -15,7 +15,7 @@ export const getAll = async () => {
 export const getById = async (id) => {
   try {
     const result = await Users.findByPk(id);
-    return result;
+    return { user: result, roles: await result.getRoles() };
   } catch (error) {
     throw error;
   }

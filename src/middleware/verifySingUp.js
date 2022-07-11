@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { ROLELIST } from '../models/role.js';
+import { ROLELIST } from '../models/roles.js';
 import Users from '../models/users.js';
 
 export const checkDuplicated = async (req, res, next) => {
