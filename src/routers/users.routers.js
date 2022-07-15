@@ -11,12 +11,13 @@ import {
   checkExistedRole,
   isAdmin,
   isEmployee,
+  verifyToken,
 } from '../middleware/index.js';
 
 const router = Router();
 
 // GET: Obtener todos los usuarios
-router.get('/', getAllCtrl);
+router.get('/', verifyToken, [isEmployee], getAllCtrl);
 
 // GET: Obtener un usuario por su ID
 router.get('/:id', getByIdCtrl);

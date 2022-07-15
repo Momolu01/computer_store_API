@@ -1,5 +1,8 @@
 /* eslint-disable no-useless-catch */
+import { Op } from 'sequelize';
+
 import Users from '../models/users.js';
+import Roles from '../models/roles.js';
 
 // GET: Obtener todos los usuarios
 export const getAll = async () => {
@@ -23,9 +26,23 @@ export const getById = async (id) => {
 // POST: Crear un nuevo usuario:
 //   req.body(name, email, password, role), el role(rol) puede ser client o employee
 export const add = async (obj) => {
+  const { userName, email, password, roles } = obj;
   try {
-    const result = await Users.create(obj);
-    return result;
+    const addedUser = await Users.create({ userName, email, password });
+    if (roles) {
+      const foundRoles = await Roles.findAll({
+        where: {
+          name: { [Op.in]: roles },
+        },
+      });
+      foundRoles.forEach(async (role) => {
+        await addedUser.addRole(role);
+      });
+    } else {
+      const defaultRole = await Roles.findOne({ where: { name: 'user' } });
+      await addedUser.addRole(defaultRole);
+    }
+    return addedUser;
   } catch (error) {
     throw error;
   }

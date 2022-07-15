@@ -20,6 +20,10 @@ Repairs.init(
       allowNull: true,
       defaultValue: 'pending',
     },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,

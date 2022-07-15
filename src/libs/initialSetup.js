@@ -9,11 +9,14 @@ import '../models/userRoles.js';
 function entitiesAssiciations() {
   Users.belongsToMany(Roles, { through: 'UserRoles' });
   Roles.belongsToMany(Users, { through: 'UserRoles' });
+
+  Users.hasOne(Repairs);
+  Repairs.belongsTo(Users);
 }
 
 const initialSetup = async () => {
-  // UserRoles.build();
-  await sequelize.sync({ force: true });
+  // await sequelize.sync({ force: true });
+  await sequelize.sync({ alter: true });
 
   entitiesAssiciations();
 

@@ -1,39 +1,37 @@
 /* eslint-disable object-curly-newline */
-import { Op } from 'sequelize';
-
-import { encryptPassword } from '../middleware/index.js';
+import { encryptPassword, comparePassword } from '../middleware/index.js';
 import { createToken } from '../libs/jwtHandler.js';
+import { add as addUser } from '../services/users.services.js';
 
-import Roles from '../models/roles.js';
 import Users from '../models/users.js';
 
 export const signUp = async (req, res) => {
   const { userName, email, password, roles } = req.body;
-
-  const newUser = await Users.create({
+  const newUser = await addUser({
     userName,
     email,
     password: await encryptPassword(password),
+    roles,
   });
-  if (roles) {
-    const foundRoles = await Roles.findAll({
-      where: {
-        name: { [Op.in]: roles },
-      },
-    });
-    foundRoles.forEach(async (role) => {
-      await role.addUser(newUser);
-    });
-  } else {
-    const defaultRole = await Roles.findOne({ where: { name: 'user' } });
-    console.log(defaultRole.name, newUser.userName);
-    await defaultRole.addUser(newUser);
-  }
-
   const token = createToken(newUser.id);
-  res.status(200).json({ newUser, token });
+  return res.status(200).json({ newUser, token });
 };
 
-export const signIn = (req, res) => {
-  res.status(200).json({ message: 'signIn' });
+export const signIn = async (req, res) => {
+  const { email, password } = req.body;
+  const userFound = await Users.findOne({
+    where: {
+      email,
+    },
+  });
+
+  if (!userFound) return res.status(400).json({ message: 'User Not Found' });
+
+  const matchPassword = await comparePassword(password, userFound.password);
+
+  if (!matchPassword) {
+    return res.status(401).json({ message: 'Incorrect Password', token: null });
+  }
+  const token = createToken(userFound.id);
+  return res.status(200).json({ message: 'signIn', token });
 };
