@@ -17,19 +17,19 @@ import {
 const router = Router();
 
 // GET: Obtener todos los usuarios
-router.get('/', verifyToken, [isEmployee], getAllCtrl);
+router.get('/', verifyToken, [isAdmin], getAllCtrl);
 
 // GET: Obtener un usuario por su ID
-router.get('/:id', getByIdCtrl);
+router.get('/:id', verifyToken, [isAdmin || isEmployee], getByIdCtrl);
 
 // POST: Crear un nuevo usuario:
 //  req.body(name, email, password, role), el role(rol) puede ser client o employee
-router.post('/', [checkDuplicated, checkExistedRole], addCtrl);
+router.post('/', verifyToken, [isAdmin], [checkDuplicated, checkExistedRole], addCtrl);
 
 // PATCH: Actualizar usuario por ID: Solo nombre y email
-router.patch('/:id', updateCtrl);
+router.patch('/:id', verifyToken, [isAdmin || isEmployee], updateCtrl);
 
 // DELETE: Deshabilitar usuario
-router.delete('/:id', disableCtrl);
+router.delete('/:id', verifyToken, [isAdmin], disableCtrl);
 
 export default router;

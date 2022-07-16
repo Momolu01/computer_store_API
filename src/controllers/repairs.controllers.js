@@ -1,3 +1,7 @@
+/* eslint-disable no-plusplus */
+import { decodeToken } from '../libs/jwtHandler.js';
+
+import Users from '../models/users.js';
 import {
   getAll,
   getById,
@@ -30,12 +34,30 @@ export const getByIdCtrl = async (req, res, next) => {
 // POST: Crear un nuevo equipo:
 //  date y userId
 export const addCtrl = async (req, res, next) => {
-  const data = req.body;
+  let newProduct;
+  const { dateDue, userId: providedId } = req.body;
   try {
-    const result = await add(data);
-    res.status(201).json(result);
+    const userId = (await decodeToken(req.headers['x-access-token'])).id;
+    const user = await Users.findByPk(userId);
+    const userRoles = await user.getRoles();
+    for (let i = 0; i < userRoles.length; i++) {
+      const role = userRoles[i];
+      if (role.name === 'admin' || role.name === 'employee') {
+        // eslint-disable-next-line no-await-in-loop
+        newProduct = await add({
+          dateDue,
+          UserId: providedId,
+        });
+        return res.status(201).json(newProduct);
+      }
+    }
+    newProduct = await add({
+      dateDue,
+      UserId: userId,
+    });
+    return res.status(201).json(newProduct);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 

@@ -11,7 +11,7 @@ Repairs.init(
       allowNull: false,
       primaryKey: true,
     },
-    date_due: {
+    dateDue: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
@@ -29,7 +29,7 @@ Repairs.init(
     sequelize,
     tableName: 'repairs',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: 'repairs_pkey',
